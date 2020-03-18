@@ -1,4 +1,4 @@
-Gonzaga	87.6
+Gonzaga 87.6
 Michigan 60.7
 Texas Tech 71.0
 FSU 74.7
@@ -13,3 +13,4 @@ Murray State 72.5
 Vermont 69.0
 NKU 57.0
 Montana 55.0
+FDU 74.9

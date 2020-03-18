@@ -1,0 +1,16 @@
+UVA 69.2
+Tennessee 84.7
+Purdue 80.5
+Kansas State 64.0
+Wisconsin 54.0
+Villanova 61.0
+Cincinnati 72.0
+Mississippi 76.0
+Oklahoma 73.0
+Iowa 78.0
+Saint Mary's 57.0
+Oregon 64.7
+UC Irvine 62.0
+OldDominion 48.0
+Colgate 70.0
+Gardner 56.0

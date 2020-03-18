@@ -1,4 +1,5 @@
 //Author: Duncan Beauch
+//Modified by Franky PC
 //Program: NCAA Tournament Simulation
 //Team Statistics: https://www.foxsports.com/college-basketball/team-stats?season=2018&category=scoring&group=2&sort=1&time=0
 import java.io.*;
@@ -8,88 +9,56 @@ public class Tournament {
    public static void main(String[] args) {
       int runs = 300;
       
-      Team[] east = {
-      new Team("Duke", 1, 76.0),
-      new Team("North Dakota", 16, 70.0),
-      new Team("VCU", 8, 58.0),
-      new Team("Central Florida", 9, 59.5),
-      new Team("Mississippi State", 5, 76.0),
-      new Team("Liberty", 12, 69.0),
-      new Team("VT", 4, 68.7),
-      new Team("StLouis", 13, 52.0),
-      new Team("Maryland", 6, 73.0),
-      new Team("Belmont", 11, 79.0),
-      new Team("LSU", 3, 70.3),
-      new Team("Yale", 14, 74.0),
-      new Team("Louisville", 7, 76.0),
-      new Team("Minnesota", 10, 68.0),
-      new Team("MichState", 2, 69.0),
-      new Team("Bradley", 15, 65.0),
-      };
+      Team[] east = new Team[16];
+      try {
+    	  east = enterTeam(new File("EastBracket.txt"));
+      } catch(FileNotFoundException e)
+      {
+    	  System.out.println("error");
+      }
       
-      /*Team[] west = {
-      new Team("Gonzaga", 1, 77.8),
-      new Team("Fairleigh", 16, 65.5),
-      new Team("Syracuse", 8, 69.0),
-      new Team("Baylor", 9, 74.5),
-      new Team("Marquette", 5, 64.0),
-      new Team("Murray", 12, 72.5),
-      new Team("FSU", 4, 74.7),
-      new Team("Vermont", 13, 69.0),
-      new Team("Buffalo", 6, 74.5),
-      new Team("Arizona State", 11, 74.0),
-      new Team("TexasTech", 3, 71.0),
-      new Team("NKY", 14, 57.0),
-      new Team("Nevada", 7, 61.0),
-      new Team("Florida", 10, 59.5),
-      new Team("Michigan", 2, 60.7),
-      new Team("Montana", 15, 55.0),
-      };*/
-      Team[] west;
+      Team[] west = new Team[16];
       try{
-    	  west = enterTeamWest(new File("Bracket.txt"));
+    	  west = enterTeam(new File("WestBracket.txt"));
       } catch (FileNotFoundException e)
       {
     	  System.out.println("error");
       }
       
-      Team[] south = {
-      new Team("UVA", 1, 69.2),
-      new Team("Gardner", 16, 56.0),
-      new Team("Mississippi", 8, 76.0),
-      new Team("Oklahoma", 9, 73.0),
-      new Team("Wisconsin", 5, 54.0),
-      new Team("Oregon", 12, 64.7),
-      new Team("Kansas State", 4, 64.0),
-      new Team("UC Irvine", 13, 62.0),
-      new Team("Villanova", 6, 61.0),
-      new Team("Saint Mary's", 11, 57.0),
-      new Team("Purdue", 3, 80.5),
-      new Team("OldDominion", 14, 48.0),
-      new Team("Cincinnati", 7, 72.0),
-      new Team("Iowa", 10, 78.0),
-      new Team("Tennessee", 2, 84.7),
-      new Team("Colgate", 15, 70.0),
+      Team[] south = //new Team[16]; 
+      /*try{
+   	   south = enterTeam(new File("SouthBracket.txt"));
+     } catch (FileNotFoundException e)
+     {
+      	  System.out.println("error");
+     }
+     */
+      {
+    	  new Team("UVA", 1, 69.2),
+          new Team("Gardner", 16, 56.0),
+          new Team("Mississippi", 8, 76.0),
+          new Team("Oklahoma", 9, 73.0),
+          new Team("Wisconsin", 5, 54.0),
+          new Team("Oregon", 12, 64.7),
+          new Team("Kansas State", 4, 64.0),
+          new Team("UC Irvine", 13, 62.0),
+          new Team("Villanova", 6, 61.0),
+          new Team("Saint Mary's", 11, 57.0),
+          new Team("Purdue", 3, 80.5),
+          new Team("OldDominion", 14, 48.0),
+          new Team("Cincinnati", 7, 72.0),
+          new Team("Iowa", 10, 78.0),
+          new Team("Tennessee", 2, 84.7),
+          new Team("Colgate", 15, 70.0),
       };
       
-      Team[] midwest = {
-      new Team("North Carolina", 1, 83.0),
-      new Team("Iona", 16, 73.0), 
-      new Team("Utah State", 8, 61.0), 
-      new Team("Washington", 9, 68.5), 
-      new Team("Auburn", 5, 80.6), 
-      new Team("New Mexico State", 12, 77.0), 
-      new Team("Kansas", 4, 81.0), 
-      new Team("Northeastern", 13, 53.0), 
-      new Team("Iowa State", 6, 59.0),
-      new Team("Ohio State", 11, 60.5), 
-      new Team("Houston", 3, 72.0),
-      new Team("Georgia State", 14, 55.0), 
-      new Team("Wofford", 7, 70.0), 
-      new Team("Seton Hall", 10, 68.0),
-      new Team("Kentucky", 2, 68.5),
-      new Team("Abilene Christ", 15, 44.0),
-      };
+      Team[] midwest = new Team[16];
+      try{
+   	   midwest = enterTeam(new File("MidwestBracket.txt"));
+     } catch (FileNotFoundException e)
+     {
+      	  System.out.println("error");
+     }
       
       for(int i = 0; i < runs; i++) {
          //East
@@ -213,24 +182,28 @@ public class Tournament {
       System.out.printf("UVA wins %.2f%% of the runs", south[0].getWins() / (double)runs * 100.0);
    }
    
-   public static Team[] enterTeamWest(File westBracket) throws FileNotFoundException
+   public static Team[] enterTeam(File bracket) throws FileNotFoundException
    {
-	   Team[] westTeam = new Team[16];
-	   Scanner scanner = new Scanner(westBracket);
+	   Team[] team = new Team[16];
+	   Scanner scanner = new Scanner(bracket);
 	   int pos = 0;
 	   int seed = 1;
 	   
 	   while(scanner.hasNextLine())
 	   {
 		   String stats = scanner.nextLine();
+		   System.out.println(stats);
+		   System.out.println(stats.lastIndexOf(' '));
 		   String name = stats.substring(0, stats.lastIndexOf(' '));
 		   double ppg = Double.parseDouble(stats.substring(stats.lastIndexOf(' ')));
-		   westTeam[pos] = new Team(name, seed, ppg);
+		   team[pos] = new Team(name, seed, ppg);
 		   pos++;
 		   seed++;
 	   }
 	   
-	   return westTeam;
+	   scanner.close();
+	   
+	   return team;
    }
 }
 
