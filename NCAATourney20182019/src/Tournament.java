@@ -9,6 +9,7 @@ public class Tournament {
    public static void main(String[] args) {
       int runs = 300;
       
+      //modified by Franky
       Team[] east = new Team[16];
       try {
     	  east = enterTeam(new File("EastBracket.txt"));
@@ -17,6 +18,7 @@ public class Tournament {
     	  System.out.println("error");
       }
       
+      //modified by franky
       Team[] west = new Team[16];
       try{
     	  west = enterTeam(new File("WestBracket.txt"));
@@ -25,33 +27,16 @@ public class Tournament {
     	  System.out.println("error");
       }
       
-      Team[] south = //new Team[16]; 
-      /*try{
+      //modified by franky
+      Team[] south = new Team[16]; 
+      try{
    	   south = enterTeam(new File("SouthBracket.txt"));
      } catch (FileNotFoundException e)
      {
       	  System.out.println("error");
      }
-     */
-      {
-    	  new Team("UVA", 1, 69.2),
-          new Team("Gardner", 16, 56.0),
-          new Team("Mississippi", 8, 76.0),
-          new Team("Oklahoma", 9, 73.0),
-          new Team("Wisconsin", 5, 54.0),
-          new Team("Oregon", 12, 64.7),
-          new Team("Kansas State", 4, 64.0),
-          new Team("UC Irvine", 13, 62.0),
-          new Team("Villanova", 6, 61.0),
-          new Team("Saint Mary's", 11, 57.0),
-          new Team("Purdue", 3, 80.5),
-          new Team("OldDominion", 14, 48.0),
-          new Team("Cincinnati", 7, 72.0),
-          new Team("Iowa", 10, 78.0),
-          new Team("Tennessee", 2, 84.7),
-          new Team("Colgate", 15, 70.0),
-      };
       
+      //modified by franky
       Team[] midwest = new Team[16];
       try{
    	   midwest = enterTeam(new File("MidwestBracket.txt"));
@@ -60,113 +45,24 @@ public class Tournament {
       	  System.out.println("error");
      }
       
+      //process modified by franky
       for(int i = 0; i < runs; i++) {
          //East
-      Team[] eastEight = {
-      east[0].match(east[1]), 
-      east[2].match(east[3]), 
-      east[4].match(east[5]), 
-      east[6].match(east[7]), 
-      east[8].match(east[9]), 
-      east[10].match(east[11]), 
-      east[12].match(east[13]), 
-      east[14].match(east[15]), 
-      };
       
-      Team[] eastQuarters = {
-      eastEight[0].match(east[1]),
-      eastEight[2].match(east[3]),
-      eastEight[4].match(east[5]),
-      eastEight[6].match(east[7]),
-      };
-      
-      Team[] eastSemis = {
-      eastQuarters[0].match(east[1]),
-      eastQuarters[2].match(east[3]),
-      };
-      
-      Team eastWinner = eastSemis[0].match(eastSemis[1]);
+      Team eastWinner = conferenceTourney(east);
          //End of East
          
          //West
-      Team[] westEight = {
-      west[0].match(west[1]), 
-      west[2].match(west[3]), 
-      west[4].match(west[5]), 
-      west[6].match(west[7]), 
-      west[8].match(west[9]), 
-      west[10].match(west[11]), 
-      west[12].match(west[13]), 
-      west[14].match(west[15]), 
-      };
-      
-      Team[] westQuarters = {
-      westEight[0].match(west[1]),
-      westEight[2].match(west[3]),
-      westEight[4].match(west[5]),
-      westEight[6].match(west[7]),
-      };
-      
-      Team[] westSemis = {
-      westQuarters[0].match(west[1]),
-      westQuarters[2].match(west[3]),
-      };
-      
-      Team westWinner = westSemis[0].match(westSemis[1]);
+      Team westWinner = conferenceTourney(west);
          //End of West
       
          //South
-      Team[] southEight = {
-      south[0].match(south[1]), 
-      south[2].match(south[3]), 
-      south[4].match(south[5]), 
-      south[6].match(south[7]), 
-      south[8].match(south[9]), 
-      south[10].match(south[11]), 
-      south[12].match(south[13]), 
-      south[14].match(south[15]), 
-      };
       
-      Team[] southQuarters = {
-      southEight[0].match(south[1]),
-      southEight[2].match(south[3]),
-      southEight[4].match(south[5]),
-      southEight[6].match(south[7]),
-      };
-      
-      Team[] southSemis = {
-      southQuarters[0].match(south[1]),
-      southQuarters[2].match(south[3]),
-      };
-      
-      Team southWinner = southSemis[0].match(southSemis[1]);
+      Team southWinner = conferenceTourney(south);
          //End of South
          
          //Midwest
-      Team[] midwestEight = {
-      midwest[0].match(midwest[1]), 
-      midwest[2].match(midwest[3]), 
-      midwest[4].match(midwest[5]), 
-      midwest[6].match(midwest[7]), 
-      midwest[8].match(midwest[9]), 
-      midwest[10].match(midwest[11]), 
-      midwest[12].match(midwest[13]), 
-      midwest[14].match(midwest[15]), 
-      };
-      
-      Team[] midwestQuarters = {
-      midwestEight[0].match(midwest[1]),
-      midwestEight[2].match(midwest[3]),
-      midwestEight[4].match(midwest[5]),
-      midwestEight[6].match(midwest[7]),
-      };
-      
-      Team[] midwestSemis = {
-      midwestQuarters[0].match(midwest[1]),
-      midwestQuarters[2].match(midwest[3]),
-      };
-      
-      Team midwestWinner = midwestSemis[0].match(midwestSemis[1]);
+      Team midwestWinner = conferenceTourney(midwest);
          //End of Midwest
       
          //Adds a tournament win to the finals winner
@@ -174,14 +70,18 @@ public class Tournament {
       
       }
       
-      //System.out.printf("East Winner: %s%nWest Winner: %s%nSouth Winner: %s%nMidwest Winner: %s%n", eastWinner, westWinner, southWinner, midwestWinner);
-      //System.out.printf("%nAnd the winner is...%s!!!", winner);
-      
       int otherWins = runs - east[0].getWins() - west[0].getWins() - south[0].getWins() - midwest[0].getWins();
       System.out.printf("Duke Wins: %d%nGonzaga Wins: %d%nUVA Wins: %d%nUNC Wins: %d%nOther: %d%n%n", east[0].getWins(), west[0].getWins(), south[0].getWins(), midwest[0].getWins(), otherWins);
       System.out.printf("UVA wins %.2f%% of the runs", south[0].getWins() / (double)runs * 100.0);
    }
    
+   /**
+    * this method was created by Franky to read the files about each conference rather than to right and pair
+    * them by hand
+    * @param bracket the bracket of teams from this conference (west, east, south, midwest)
+    * @return a new array of Team objects representing each team in the conference on the bracket
+    * @throws FileNotFoundException
+    */
    public static Team[] enterTeam(File bracket) throws FileNotFoundException
    {
 	   Team[] team = new Team[16];
@@ -192,8 +92,6 @@ public class Tournament {
 	   while(scanner.hasNextLine())
 	   {
 		   String stats = scanner.nextLine();
-		   System.out.println(stats);
-		   System.out.println(stats.lastIndexOf(' '));
 		   String name = stats.substring(0, stats.lastIndexOf(' '));
 		   double ppg = Double.parseDouble(stats.substring(stats.lastIndexOf(' ')));
 		   team[pos] = new Team(name, seed, ppg);
@@ -204,6 +102,45 @@ public class Tournament {
 	   scanner.close();
 	   
 	   return team;
+   }
+   
+   /**
+    * this conference tourney was originally created by duncan and then was modified by franky
+    * she used the same layout but switched out which arrays were used to better match the bracket.
+    * duncan lined teams up with consecutive pairing while franky made sure to follow the line ups
+    * and order of the brackets
+    * @param team an array of the teams in this conference
+    * @return the winner of this conference
+    */
+   public static Team conferenceTourney(Team[] team)
+   {
+	   Team[] eight = {
+			      team[0].match(team[15]), 
+			      team[7].match(team[8]), 
+			      team[4].match(team[11]), 
+			      team[3].match(team[12]), 
+			      team[5].match(team[10]), 
+			      team[2].match(team[13]), 
+			      team[6].match(team[9]), 
+			      team[1].match(team[14]), 
+			      };
+			      
+			      Team[] quarters = {
+			      eight[0].match(eight[1]),
+			      eight[2].match(eight[3]),
+			      eight[4].match(eight[5]),
+			      eight[6].match(eight[7]),
+			      };
+			      
+			      Team[] semis = {
+			      quarters[0].match(quarters[1]),
+			      quarters[2].match(quarters[3]),
+			      };
+			      
+			      Team winner = semis[0].match(semis[1]);
+			         //End of East
+			      
+			      return winner;
    }
 }
 

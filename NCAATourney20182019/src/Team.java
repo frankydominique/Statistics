@@ -1,9 +1,9 @@
 //Author: Duncan Beauch
+//Modified by Franky PC
 //Program: NCAA Tournament Simulation
 
 public class Team {
    private String teamName;
-   private boolean status;
    private int seed;
    private double pointsPerGame;
    private int wins;
@@ -26,11 +26,7 @@ public class Team {
    public double getPointsPerGame() {
       return pointsPerGame;
    }
-   
-   public boolean getStatus() {
-      return status;
-   }
-   
+
    public int getWins() {
       return wins;
    }
@@ -43,33 +39,41 @@ public class Team {
       wins += n;
    }
    
-   public void setStatus(boolean status) {
-      this.status = status;
-   }
-   
+   /**
+    * this method simulates which team will win
+    * @param otherTeam the team being competed against
+    * @return the winner of this match up
+    */
    public Team match(Team otherTeam) {
-      double ourTeamPoints = (16 - this.getSeed()) * 3 + (this.getPointsPerGame() * Math.random() * 1.5);
-      double otherTeamPoints = (16 - otherTeam.getSeed()) * 3 + (otherTeam.getPointsPerGame() * Math.random() * 1.5);
-      
-      /*if(otherTeam.getSeed() > this.getSeed())
-         otherTeamPoints += otherTeam.getSeed() * 2;
-      else
-         ourTeamPoints += this.getSeed() * 2;*/
-      
-      if(ourTeamPoints > otherTeamPoints)
-         return this;
-      else if(ourTeamPoints < otherTeamPoints)
-         return otherTeam;
-      else if(ourTeamPoints == otherTeamPoints) {
-         if(this.getSeed() > otherTeam.getSeed())
-            return this;
-         else
-            return otherTeam;
-      }
+
+	  //gets the probability each team will win with a random factor
+	  double collectivePoints = this.getPointsPerGame() + otherTeam.getPointsPerGame();
+	  double thisTeamProb = ((Math.random() * 1.5) * this.getPointsPerGame()) / collectivePoints;
+	  double otherTeamProb = ((Math.random() * 1.5) * otherTeam.getPointsPerGame()) / collectivePoints;
+	  
+	  //gives a small probability edge to the higher seeded team
+	  int seedDiff = this.getSeed() - otherTeam.getSeed();
+	  thisTeamProb -= seedDiff / 16.0;
+	  
+	  //returns the team with the higher probability
+	  if(thisTeamProb > otherTeamProb)
+		  return this;
+	  else if(thisTeamProb < otherTeamProb)
+		  return otherTeam;
+	  else if(thisTeamProb == otherTeamProb)
+	  {
+		  thisTeamProb *= (Math.random() * 1.5);
+		  otherTeamProb *= (Math.random() * 1.5);
+		  if(thisTeamProb > otherTeamProb)
+			  return this;
+		  else if(thisTeamProb < otherTeamProb)
+			  return otherTeam;
+	  }
+	   
       return null;
    }
    
    public String toString() {
-      return this.getName();
+      return this.getName() + " " + this.getPointsPerGame() + " " + this.getSeed();
    }
 }
