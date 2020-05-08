@@ -1,0 +1,13 @@
+Affirmed 0.2
+Assault 0.05
+Secretariat 0.2857
+Sir Barton 0.05
+Seattle Slew 0.2
+American Pharoah 0.1667
+Gallant Fox 0.05
+Citation 0.25
+War Admiral 0.125
+Whirlaway 0.1667
+Count Fleet 0.1667
+Justify 0.06667
+Omaha 0.05

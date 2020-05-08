@@ -105,7 +105,7 @@ public class Tournament {
    }
    
    /**
-    * this conference tourney was originally created by duncan and then was modified by franky
+    * this conference tourney was originally created by duncan and then was modified by franky.
     * she used the same layout but switched out which arrays were used to better match the bracket.
     * duncan lined teams up with consecutive pairing while franky made sure to follow the line ups
     * and order of the brackets
